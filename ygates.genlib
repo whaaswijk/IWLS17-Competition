@@ -1,0 +1,10 @@
+GATE ZERO 0 O=CONST0;
+GATE ONE 0 O=CONST1;
+GATE INV1 0 O=!a; PIN * INV 1 999 0.9 0.3 0.9 0.3
+
+#GATE AND2 3 O=a*b; PIN * NONINV 1 999 1.9 0.3 1.9 0.3
+#GATE OR2 3 O=a+b; PIN * NONINV 1 999 2.4 0.3 2.4 0.3
+
+GATE Y1 3 O=a*b+b*c+a*c; PIN * NONINV 1 999 1.6 0.4 1.6 0.4
+GATE Y2 3 O=a*b*d+a*b*e+a*c*e+a*c*f+b*c*d+b*c*e+b*c*f+b*e*f+c*d*e+d*e*f; PIN * NONINV 1 999 1.6 0.4 1.6 0.4
+GATE Y3 3 O=a*b*d*g+a*b*d*h+a*b*e*h+a*b*e*i+a*c*e*h+a*c*e*i+a*c*f*i+a*c*f*j+b*c*d*g+b*c*d*h+b*c*e*h+b*c*e*i+b*c*f*i+b*c*f*j+b*e*f*h+b*e*f*i+b*e*f*j+b*e*i*j+c*d*e*g+c*d*e*h+c*d*e*i+c*e*g*h+d*e*f*g+d*e*f*h+d*e*f*i+d*e*f*j+d*e*i*j+d*f*h*i+d*h*i*j+e*f*g*h+f*g*h*i+g*h*i; PIN * NONINV 1 999 1.6 0.4 1.6 0.4
