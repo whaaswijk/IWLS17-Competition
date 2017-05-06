@@ -51,6 +51,7 @@ int main(int argc, char** argv) {
 	auto pAbc = Abc_FrameGetGlobalFrame();
 
 	try_command(pAbc, "read_library ygates.genlib");
+	try_command(pAbc, "read_super ygates.super");
 
 	printf("Reading %s\n", infile.c_str());
 	try_command(pAbc, "read_verilog " + infile);
