@@ -1,0 +1,377 @@
+\tikzset{%
+  font=\footnotesize,
+  mig/.style={decoration={markings,mark=at position .5 with {\fill (0,0) circle (1.5pt);}}},
+  every picture/.style={mig},
+  maj/.style={draw,circle,minimum size=15pt,inner sep=0pt,outer sep=0pt},
+  small maj/.style={draw,circle,minimum size=10pt,inner sep=0pt,outer sep=0pt},
+  big maj/.style={draw,circle,minimum size=20pt,inner sep=0pt,outer sep=0pt},
+  computed/.style={fill,pattern=north east lines},
+  child/.style={draw,circle,solid,inner sep=0pt,font=\scriptsize},
+  %compl/.style={dash pattern=on 2pt off 1pt},
+  compl/.style={postaction={decorate}},
+  title/.style={above,yshift=7pt,text depth=.5ex},
+  input/.style={},
+  output/.style={},
+  vertex/.style={draw,circle,inner sep=0pt, minimum size=14pt},
+  xmg/.style={decoration={markings,mark=at position .5 with {\fill circle (1.5pt);}}},
+}
+\usepackage{tkz-graph}
+\usetikzlibrary{shapes.geometric}
+
+\newcommand{\tikzPEquivalentF}{%
+	\begin{tikzpicture}[circuit logic US, 
+	medium circuit symbols, 
+	every circuit symbol/.style={
+		fill=white,draw}] 
+	\matrix[column sep=7mm, ampersand replacement=\&]
+	{ 
+		\node (i0) {a}; \& \\ 
+						\& \node [and gate, inputs={ni}] (o) {}; \\ 
+		\node (i1) {b}; \& \\ 
+						\& \\
+	};
+	\draw (i0.east) -- ++(right:3mm) |- (o.input 1);
+	\draw (i1.east) -- ++(right:3mm) |- (o.input 2);
+	\draw (o.output) -- ++(right:3mm); 
+	\end{tikzpicture}
+}
+
+\newcommand{\tikzPEquivalentG}{%
+	\begin{tikzpicture}[circuit logic US, 
+	medium circuit symbols, 
+	every circuit symbol/.style={
+		fill=white,draw}] 
+	\matrix[column sep=7mm, ampersand replacement=\&]
+	{ 
+		\node (i0) {a}; \& \\ 
+		\& \node [and gate, inputs={in}] (o) {}; \\ 
+		\node (i1) {b}; \& \\ 
+		\& \\
+	};
+	\draw (i0.east) -- ++(right:3mm) |- (o.input 1);
+	\draw (i1.east) -- ++(right:3mm) |- (o.input 2);
+	\draw (o.output) -- ++(right:3mm); 
+	\end{tikzpicture}
+}
+
+\newcommand{\tikzNPNEquivalentH}{%
+	\begin{tikzpicture}[circuit logic US, 
+						medium circuit symbols,
+						every circuit symbol/.style={
+							fill=white,draw}]
+	\matrix[column sep=7mm, ampersand replacement=\&] 
+	{ 
+		\node (i0) {a}; \& \& \& \\
+						\& \node [and gate] (a1) {}; \& \& \\ 
+		\node (i1) {b}; \& \& \node [or gate] (a2) {}; \& \node (f) {f}; \\ 
+						\& \& \& \\
+		\node (i2) {c}; \& \& \& \\
+	};
+	\draw (i0.east) -- ++(right:3mm) |- (a1.input 1);
+	\draw (i1.east) -- ++(right:3mm) |- (a1.input 2);
+	\draw (i2.east) -- ++(right:3mm) |- (a2.input 2);
+	\draw (a1.output) -- ++(right:3mm) |- (a2.input 1);
+	\draw (a2.output) -- ++(right:6mm);
+	\end{tikzpicture}
+}
+
+\newcommand{\tikzNPNEquivalentI}{%
+	\begin{tikzpicture}[circuit logic US, 
+	medium circuit symbols,
+	every circuit symbol/.style={
+		fill=white,draw}]
+	\matrix[column sep=7mm, ampersand replacement=\&] 
+	{ 
+		\node (i0) {a}; \& \& \\
+		\& \node [and gate] (a1) {}; \& \\ 
+		\node (i1) {b}; \& \& \node [nor gate] (a2) {};\\ 
+		\& \& \\
+		\node (i2) {c}; \& \& \\
+	};
+	\draw (i0.east) -- ++(right:3mm) |- (a1.input 1);
+	\draw (i1.east) -- ++(right:3mm) |- (a1.input 2);
+	\draw (i2.east) -- ++(right:3mm) |- (a2.input 2);
+	\draw (a1.output) -- ++(right:3mm) |- (a2.input 1);
+	\draw (a2.output) -- ++(right:3mm);
+	\end{tikzpicture}
+}
+
+\newcommand{\tikzhard}{%
+\begin{tikzpicture}
+\draw [] (0,3) rectangle (4,4) node[pos=.5] {NPN class (All permutations)};
+\draw [->] (2,4.6) node[above] {$f [63 : 0]$}-- (2,4.0);
+\draw (1.9,4.3) -- (2.1,4.5);
+\draw [] (0,1) rectangle (4,2) node[pos=.5] {Find representative};
+\draw [->] (0.4,3) -- (0.4,2.4) node[below] {$f_{1}$};
+\draw (0.3,2.6) -- (0.5,2.8);
+\draw [->] (1,3) -- (1,2.4) node[below] (n1) {$f_{2}$}; %node[right] {$\dots$};
+\draw (0.9,2.6) -- (1.1,2.8);
+\node[right=.6cm of n1] (n2) {} ; 
+\node[above = .1cm of n2] (n3) {$\dots$}; 
+\draw [->] (3.6,3) -- (3.6,2.4) node[below] {$ f_{92,160}$};
+\draw (3.5,2.6) -- (3.7,2.8);
+\draw [->] (2,1) -- (2,0.4) node[below] {$\hat{f}[63 : 0] $};
+\draw (1.9,0.6) -- (2.1,0.8);
+\end{tikzpicture}
+}
+
+\newcommand{\tikzFourUpperBound}{%
+  \begin{tikzpicture}[%
+    circuit logic CDH,
+    medium circuit symbols,
+    every circuit symbol/.style={fill=white,draw,point up},
+    lut/.style={draw,minimum width=1cm,minimum height=1cm}
+  ]
+  \node[mux] (mux) {};
+  \draw (mux.output) -- ++(up:5pt) node[inner sep=1pt,above] {$f$};
+  \draw (mux.select) -| ++(30pt,-15pt) node[inner sep=1pt,below] {$x_1$};
+  \draw (mux.input 1) |- ++(-5pt,-5pt) -| ++(-5pt,-5pt) node[lut,anchor=north] (lut1) {$f_{\bar x_1}$};
+  \node[above,font=\scriptsize,inner sep=1pt] at (mux.input 1) {$0$};
+  \draw (mux.input 2) |- ++(5pt,-5pt) -| ++(5pt,-5pt) node[lut,anchor=north] (lut2) {$f_{x_1}$};
+  \node[above,font=\scriptsize,inner sep=1pt] at (mux.input 2) {$1$};
+
+  \foreach \n in {1,2} {%
+    \foreach \x/\l in {1/2,4/3,7/4} {%
+      \draw ($(lut\n.south west)!\x/8!(lut\n.south east)$) -- ++(down:5pt) node[inner sep=1pt,below] {$x_{\l}$};
+    }
+  }
+\end{tikzpicture}
+}
+
+\newcommand{\tikzBooleanChainExample}{%
+  \begin{tikzpicture}[scale=0.8]
+    \node (a) at (0, 2) {$a$};
+    \node (b) at (0, 1) {$b$};
+    \node (c) at (0, 0) {$c$};
+    \node (and)[circle,draw] at (2, 1.5) {$\wedge$};
+    \node (or)[circle,draw] at (4, 0.5) {$\vee$};
+    \node (f) at (6, 0.5) {$f$};
+
+    \begin{scope}[every path/.style={->,>=stealth}]
+       \draw (a) -- (and);
+       \draw (b) -- (and); 
+       \draw (c) -- (or);
+       \draw (and) -- (or);
+       \draw (or) -- (f);
+    \end{scope}
+  \end{tikzpicture}
+}
+
+\newcommand{\tikzNPNEquivalentHNoF}{%
+	\begin{tikzpicture}[circuit logic US, 
+						medium circuit symbols,
+						every circuit symbol/.style={
+							fill=white,draw}]
+	\matrix[column sep=7mm, ampersand replacement=\&] 
+	{ 
+		\node (i0) {a}; \& \& \\
+						\& \node [and gate] (a1) {}; \& \\ 
+		\node (i1) {b}; \& \& \node [or gate] (a2) {}; \\ 
+						\& \& \\
+		\node (i2) {c}; \& \& \\
+	};
+	\draw (i0.east) -- ++(right:3mm) |- (a1.input 1);
+	\draw (i1.east) -- ++(right:3mm) |- (a1.input 2);
+	\draw (i2.east) -- ++(right:3mm) |- (a2.input 2);
+	\draw (a1.output) -- ++(right:3mm) |- (a2.input 1);
+	\draw (a2.output) -- ++(right:3mm);
+	\end{tikzpicture}
+}
+
+\newcommand{\tikzIterationOne}{
+	\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+      text badly centered, inner sep=0pt, node distance=4cm,minimum width=4cm]
+    \tikzstyle{block} = [rectangle, draw, 
+      text centered, node distance=3cm,minimum width=4cm,minimum height=1cm]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20]
+
+	\begin{tikzpicture}[every node/.style={scale=0.75}, node distance=2cm]
+      \node [block] (entry1) { $\varnothing$ };
+	  \node [block,below=0cm of entry1] (entry2) { $\varnothing$ };
+	  \node [block,below=0cm of entry2] (entry3) { $\varnothing$ };
+	  
+	  
+	  \node [below=0cm of entry3] (vdots1) { $\vdots$ };
+	  \node [block,below=0cm of vdots1] (entry4) { $\varnothing$ };
+	  \node [below=0cm of entry4] (vdots2) { $\vdots$ };
+	  
+	  \node [single arrow, dashed, draw, minimum height=1cm, outer sep=0pt,
+       left=1cm of entry1] (arrow1) {\vphantom{x}\hphantom{xxxxxxxxxxxxxxxxxx}};
+	  \node [left=0.5cm of entry1] (f) { $f$ };
+	  \node [left=0.46cm of entry2] (fp) { $f'$ };
+	  \node [left=0.53cm of entry3] (g) { $g$ };
+	  \node [left=0.42cm of entry4] (fpp) { $f''$ };
+    \end{tikzpicture}
+}
+
+\newcommand{\tikzIterationTwo}{
+	\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+      text badly centered, inner sep=0pt, node distance=4cm,minimum width=4cm]
+    \tikzstyle{block} = [rectangle, draw, 
+      text centered, node distance=3cm,minimum width=4cm,minimum height=1cm]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20]
+
+	\begin{tikzpicture}[every node/.style={scale=0.75}, node distance=2cm]
+      \node [block] (entry1) { $\varnothing$ };
+	  \node [block,below=0cm of entry1] (entry2) { $\varnothing$ };
+	  \node [block,below=0cm of entry2] (entry3) { $\varnothing$ };
+	  
+	  
+	  \node [below=0cm of entry3] (vdots1) { $\vdots$ };
+	  \node [block,below=0cm of vdots1] (entry4) { $\varnothing$ };
+	  \node [below=0cm of entry4] (vdots2) { $\vdots$ };
+	  
+	  \node [single arrow, fill=red!20, draw, minimum height=1cm, outer sep=0pt,
+       left=1cm of entry1] (arrow1) {\vphantom{x}\hphantom{xxxxxxxxxxxxxxxxxx}};
+	  \node [left=0.5cm of entry1]  (f) { $f$ };
+	  \node [left=0.46cm of entry2] (fp) { $f'$ };
+	  \node [left=0.53cm of entry3] (g) { $g$ };
+	  \node [left=0.42cm of entry4] (fpp) { $f''$ };
+    \end{tikzpicture}
+}
+
+\newcommand{\tikzIterationThree}{
+	\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+      text badly centered, inner sep=0pt, node distance=4cm,minimum width=4cm]
+    \tikzstyle{block} = [rectangle, draw, 
+      text centered, node distance=3cm,minimum width=4cm,minimum height=1cm]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20]
+
+	\begin{tikzpicture}[every node/.style={scale=0.75}, node distance=2cm]
+      \node [block] (entry1) { $\hat f$ };
+	  \node [block,below=0cm of entry1] (entry2) { $\hat f$ };
+	  \node [block,below=0cm of entry2] (entry3) { $\varnothing$ };
+	  
+	  
+	  \node [below=0cm of entry3] (vdots1) { $\vdots$ };
+	  \node [block,below=0cm of vdots1] (entry4) { $\hat f$ };
+	  \node [below=0cm of entry4] (vdots2) { $\vdots$ };
+	  
+	  \node [single arrow, fill=red!20, draw, minimum height=1cm, outer sep=0pt,
+       left=1cm of entry1] (arrow1) {\vphantom{x}\hphantom{xxxxxxxxxxxxxxxxxx}};
+	  \node [left=0.5cm of entry1]  (f) { $f$ };
+	  \node [left=0.46cm of entry2] (fp) { $f'$ };
+	  \node [left=0.53cm of entry3] (g) { $g$ };
+	  \node [left=0.42cm of entry4] (fpp) { $f''$ };
+    \end{tikzpicture}
+}
+
+\newcommand{\tikzIterationFour}{
+	\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+      text badly centered, inner sep=0pt, node distance=4cm,minimum width=4cm]
+    \tikzstyle{block} = [rectangle, draw, 
+      text centered, node distance=3cm,minimum width=4cm,minimum height=1cm]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20]
+
+	\begin{tikzpicture}[every node/.style={scale=0.75}, node distance=2cm]
+      \node [block] (entry1) { $\hat f$ };
+	  \node [block,below=0cm of entry1] (entry2) { $\hat f$ };
+	  \node [block,below=0cm of entry2] (entry3) { $\varnothing$ };
+	  
+	  
+	  \node [below=0cm of entry3] (vdots1) { $\vdots$ };
+	  \node [block,below=0cm of vdots1] (entry4) { $\hat f$ };
+	  \node [below=0cm of entry4] (vdots2) { $\vdots$ };
+	  
+	  \node [single arrow, dashed, draw, minimum height=1cm, outer sep=0pt,
+       left=1cm of entry2] (arrow1) {\vphantom{x}\hphantom{xxxxxxxxxxxxxxxxxx}};
+	  \node [left=0.5cm of entry1]  (f) { $f$ };
+	  \node [left=0.46cm of entry2] (fp) { $f'$ };
+	  \node [left=0.53cm of entry3] (g) { $g$ };
+	  \node [left=0.42cm of entry4] (fpp) { $f''$ };
+    \end{tikzpicture}
+}
+
+\newcommand{\tikzIterationFive}{
+	\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+      text badly centered, inner sep=0pt, node distance=4cm,minimum width=4cm]
+    \tikzstyle{block} = [rectangle, draw, 
+      text centered, node distance=3cm,minimum width=4cm,minimum height=1cm]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20]
+
+	\begin{tikzpicture}[every node/.style={scale=0.75}, node distance=2cm]
+      \node [block] (entry1) { $\hat f$ };
+	  \node [block,below=0cm of entry1] (entry2) { $\hat f$ };
+	  \node [block,below=0cm of entry2] (entry3) { $\varnothing$ };
+	  
+	  
+	  \node [below=0cm of entry3] (vdots1) { $\vdots$ };
+	  \node [block,below=0cm of vdots1] (entry4) { $\hat f$ };
+	  \node [below=0cm of entry4] (vdots2) { $\vdots$ };
+	  
+	  \node [single arrow, dashed, draw, minimum height=1cm, outer sep=0pt,
+       left=1cm of entry3] (arrow1) {\vphantom{x}\hphantom{xxxxxxxxxxxxxxxxxx}};
+	  \node [left=0.5cm of entry1]  (f) { $f$ };
+	  \node [left=0.46cm of entry2] (fp) { $f'$ };
+	  \node [left=0.53cm of entry3] (g) { $g$ };
+	  \node [left=0.42cm of entry4] (fpp) { $f''$ };
+    \end{tikzpicture}
+}
+
+\newcommand{\tikzIterationSix}{
+	\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+      text badly centered, inner sep=0pt, node distance=4cm,minimum width=4cm]
+    \tikzstyle{block} = [rectangle, draw, 
+      text centered, node distance=3cm,minimum width=4cm,minimum height=1cm]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20]
+
+	\begin{tikzpicture}[every node/.style={scale=0.75}, node distance=2cm]
+      \node [block] (entry1) { $\hat f$ };
+	  \node [block,below=0cm of entry1] (entry2) { $\hat f$ };
+	  \node [block,below=0cm of entry2] (entry3) { $\varnothing$ };
+	  
+	  
+	  \node [below=0cm of entry3] (vdots1) { $\vdots$ };
+	  \node [block,below=0cm of vdots1] (entry4) { $\hat f$ };
+	  \node [below=0cm of entry4] (vdots2) { $\vdots$ };
+	  
+	  \node [single arrow, fill=red!20, draw, minimum height=1cm, outer sep=0pt,
+       left=1cm of entry3] (arrow1) {\vphantom{x}\hphantom{xxxxxxxxxxxxxxxxxx}};
+	  \node [left=0.5cm of entry1]  (f) { $f$ };
+	  \node [left=0.46cm of entry2] (fp) { $f'$ };
+	  \node [left=0.53cm of entry3] (g) { $g$ };
+	  \node [left=0.42cm of entry4] (fpp) { $f''$ };
+    \end{tikzpicture}
+}
+
+\newcommand{\tikzIterationSeven}{
+	\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+      text badly centered, inner sep=0pt, node distance=4cm,minimum width=4cm]
+    \tikzstyle{block} = [rectangle, draw, 
+      text centered, node distance=3cm,minimum width=4cm,minimum height=1cm]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20]
+
+	\begin{tikzpicture}[every node/.style={scale=0.75}, node distance=2cm]
+      \node [block] (entry1) { $\hat f$ };
+	  \node [block,below=0cm of entry1] (entry2) { $\hat f$ };
+	  \node [block,below=0cm of entry2] (entry3) { $\hat g$ };
+	  
+	  
+	  \node [below=0cm of entry3] (vdots1) { $\vdots$ };
+	  \node [block,below=0cm of vdots1] (entry4) { $\hat f$ };
+	  \node [below=0cm of entry4] (vdots2) { $\vdots$ };
+	  
+	  \node [single arrow, fill=red!20, draw, minimum height=1cm, outer sep=0pt,
+       left=1cm of entry3] (arrow1) {\vphantom{x}\hphantom{xxxxxxxxxxxxxxxxxx}};
+	  \node [left=0.5cm of entry1]  (f) { $f$ };
+	  \node [left=0.46cm of entry2] (fp) { $f'$ };
+	  \node [left=0.53cm of entry3] (g) { $g$ };
+	  \node [left=0.42cm of entry4] (fpp) { $f''$ };
+    \end{tikzpicture}
+}
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "paper"
+%%% End:

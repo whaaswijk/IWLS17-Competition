@@ -1,0 +1,111 @@
+% !TEX root = ./main.tex
+\documentclass[usenames,dvipsnames]{beamer}
+\usefonttheme[onlymath]{serif}
+%\usefonttheme{serif}
+\usepackage{fmtcount}
+\setbeamertemplate{caption}{\centering\insertcaption} 
+%\usepackage{pgfplots}    
+%\setbeamertemplate{caption}{\raggedright\centering\insertcaption\par}
+\include{talkmac}
+\usepackage{subfig}
+\captionsetup[subfigure]{labelformat=empty}
+
+\definecolor{darkgreen}{rgb}{0.01, 0.75, 0.24}
+\input{pictures}
+\graphicspath{{images/}}
+
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{soul}
+
+\defbeamertemplate{itemize item}{image}{\small\includegraphics[height=1.6ex]{blacksword}}
+\defbeamertemplate{itemize subitem}{image}{\scriptsize\includegraphics[height=1.6ex]{blacksword}}
+\defbeamertemplate{itemize subsubitem}{image}{\tiny\includegraphics[height=1.6ex]{blacksword}}
+
+\setbeamertemplate{itemize item}[image]
+\setbeamertemplate{itemize subitem}[image]
+\setbeamertemplate{itemize subsubitem}[image]
+
+% Custom reference environment (see https://tex.stackexchange.com/questions/94684/how-can-i-push-footnotes-to-the-bottom-of-the-page-in-beamer)
+\usepackage[absolute,overlay]{textpos} 
+\newenvironment{reference}[2]{\begin{textblock*}{\textwidth}(#1,#2)\scriptsize\it\bgroup\color{black}}{\egroup\end{textblock*}}
+
+\setbeamercolor{block title}{fg=Sepia}
+
+\title{ \textit{\underline{\textcolor{Sepia}{How to Blunder One's Way Into 3rd Place}}}}
+\author{\fontsize{9pt}{5mm}\selectfont Winston Haaswijk}
+\institute{%
+Integrated Systems Laboratory, EPFL
+  \\[7pt]
+\includegraphics[height=16pt]{images/epfl} \quad \includegraphics[height=16pt]{images/lsi}
+}
+
+\date{June 17, 2017}
+
+\setbeamertemplate{navigation symbols}{%
+   \usebeamerfont{footline}
+   \usebeamercolor[fg]{footline}
+   \phantom{g}\insertframenumber{} / \inserttotalframenumber
+}{}
+
+\newcommand{\keepframe}{\addtocounter{framenumber}{-1}}
+
+% Alternative title frame
+\defbeamertemplate*{title page}{erato}[1][]
+{
+  \bigskip\bigskip\bigskip
+
+  \begin{center}
+	  {\usebeamercolor[fg]{title}\usebeamerfont{title}\inserttitle}
+  \end{center}
+
+  \medskip
+  \usebeamerfont{author}\insertauthor \\[10pt]
+
+  \usebeamerfont{institute}\insertinstitute
+
+  \usebeamerfont{date}\insertdate
+
+  \vskip -1.75cm
+  \hfill\hspace*{4.95cm}\includegraphics[height=5cm]{images/quixote.jpg}
+}
+
+\begin{document}
+
+\titleframe
+
+\f{introduction1} 
+\f{plan1} 
+\usebackgroundtemplate{ }
+\usebackgroundtemplate{
+	\tikz[overlay,remember picture] 
+	\node (none) at (9.70,-7) { 
+		\includegraphics[scale=0.5]{thinking2}
+	};
+
+}
+\f{plan2} 
+\usebackgroundtemplate{ }
+
+\f{failure1} 
+\f{nolaptopnoproblem}
+\usebackgroundtemplate{
+	\tikz[overlay,remember picture] 
+	\node (none) at (9.70,-7) { 
+		\includegraphics[scale=0.5]{thinking2}
+	};
+
+}
+\f{plan3}  % Back to the plan (laptop dead, server not working)
+\usebackgroundtemplate{ }
+\f{nomatter}  % No matter, build Y-gate library
+\f{planremainder}
+\f{notimewaste}
+
+\f{thankyou} 
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

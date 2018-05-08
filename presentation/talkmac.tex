@@ -1,0 +1,148 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\usepackage{amsmath}
+\usepackage{bbding}
+\usepackage{colortbl}
+\usepackage{dsfont}
+\usepackage{environ}
+\usepackage{etex}
+\usepackage{ifthen}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{stackrel}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{xparse}
+
+\renewcommand{\AlCapFnt}{\normalfont\scriptsize}
+\renewcommand{\algorithmcfname}{Alg.}
+
+\usetikzlibrary{backgrounds,calc,chains,circuits.logic.US,decorations.markings,decorations.pathreplacing,patterns,positioning,shapes}
+
+\tikzset{%
+  mig/.style={decoration={markings,mark=at position .5 with { \fill circle (2pt); }}},
+  complemented/.style={postaction={decorate}}
+}
+
+\newcommand{\currentframe}[1]{\gdef\varcurrentframe{#1}}
+\currentframe{}
+\newcommand{\ifshowall}[1]{\ifthenelse{\equal{\varcurrentframe}{}}{#1}{}}
+
+% \let\oldmaketitle=\maketitle
+% \renewcommand{\maketitle}{%
+%   \oldmaketitle
+%   \begin{tikzpicture}[overlay]
+%     \begin{scope}[every node/.style={anchor=west}]
+%       \node at (0,-.05\paperheight) (ub) {\includegraphics[height=16pt]{images/ub}};
+%       \node at (ub.east) (dfki) {\includegraphics[height=18pt]{images/dfki}};
+%     \end{scope}
+
+%     \node[anchor=east] at (\framewidth,-.05\paperheight) {%
+%       \includegraphics[height=18pt]{images/dfg}
+%     };
+%   \end{tikzpicture}
+% }
+
+\newcommand{\titleframe}{{\setbeamertemplate{navigation symbols}{}\ifshowall{\maketitle}}}
+\newcommand{\tocframe}{\ifshowall{\frame{\tableofcontents}}}
+\newcommand{\toccframe}{\ifshowall{\frame{\tableofcontents[currentsection]}}}
+
+\let\oldsection=\section
+\renewcommand{\section}[1]{%
+  \oldsection{#1}
+  \toccframe
+}
+
+\makeatletter
+\newcommand{\f}[1]{%
+%  \ifthenelse{\equal{\varcurrentframe}{} \OR \equal{\varcurrentframe}{#1}}{%
+%    \input{frames/#1.tex}
+%  }{}
+  \ifthenelse{\equal{\varcurrentframe}{}}{%
+    \input{frames/#1.tex}
+  }{%
+    \@for\i:=\varcurrentframe\do{%
+      \ifthenelse{\equal{\i}{#1}}{%
+        \input{frames/#1.tex}
+      }{}
+    }
+  }
+}
+\makeatother
+
+\newcommand{\p}[1]{%
+  \input{figures/#1.tex}
+}
+
+\newcommand{\B}{\mathds{B}}
+
+\newcommand{\centerTwo}[2]{%
+  \begin{columns}
+    \begin{column}{.5\textwidth}
+      \centering
+      #1
+    \end{column}
+    \begin{column}{.5\textwidth}
+      \centering
+      #2
+    \end{column}
+  \end{columns}
+}
+
+\newcommand{\centerThree}[3]{%
+  \begin{columns}
+    \begin{column}{.33\textwidth}
+      \centering
+      #1
+    \end{column}
+    \begin{column}{.34\textwidth}
+      \centering
+      #2
+    \end{column}
+    \begin{column}{.33\textwidth}
+      \centering
+      #3
+    \end{column}
+  \end{columns}
+}
+
+% Reference
+\newcommand{\breference}[1]{%
+\setbeamertemplate{footline}{\leavevmode\hbox{\begin{beamercolorbox}[wd=.95\paperwidth,ht=0ex,dp=1ex]{author in head/foot}\usebeamerfont{author in head/foot}#1\end{beamercolorbox}}\vskip0pt}}
+
+\setbeamercolor{graybox}{bg=gray!30!white}
+\setbeamercolor{bluebox}{bg=blue!20!white}
+
+\setlength{\fboxsep}{0pt}
+\newcommand{\tgray}[1]{\colorbox{gray!30!white}{#1}}
+\newcommand{\tblue}[1]{\colorbox{blue!20!white}{#1}}
+
+\newenvironment{graybox}{\begin{beamercolorbox}[sep=3pt]{graybox}}{\end{beamercolorbox}}
+\newenvironment{bluebox}{\begin{beamercolorbox}[sep=3pt]{bluebox}}{\end{beamercolorbox}}
+
+% Alg.
+\usepackage[linesnumbered]{algorithm2e}
+
+\SetKwInOut{Input}{Input}
+\SetKwInOut{Output}{Output}
+\SetKwFunction{Fopt}{opt}
+\SetKwFunction{Ftopsort}{topsort}
+\SetKwFunction{Finsert}{insert}
+\SetKwFunction{Fbest}{best}
+\SetKwProg{Fn}{Function}{}{}
+\SetKwData{Dcand}{cand}
+
+\newcommand{\bv}{\ensuremath{\operatorname{bv}}}
+\newcommand{\children}{\ensuremath{\operatorname{children}}}
+\newcommand{\cuts}{\ensuremath{\operatorname{cuts}}}
+\newcommand{\hex}[1]{$\mathtt{{}^{\scriptscriptstyle\#}#1}$}
+\newcommand{\ccm}{\ensuremath{C_{\langle\rangle}}}
+\newcommand{\hasmig}{\ensuremath{\operatorname{HasMIG}}}
+\newcommand{\adj}{\ensuremath{\operatorname{adj}}}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "talk"
+%%% End:
